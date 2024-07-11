@@ -1,0 +1,412 @@
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  --primary-color: #DF3821;
+  --background-color: #e6ecf0;
+  display: flex;
+  height: 100vh;
+  max-width: 1300px;
+  margin: auto;
+  padding: 0 10px;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  border-right: 1px solid var(--background-color);
+  flex: 0.2;
+  min-width: 250px;
+  margin-top: 20px;
+  padding: 0 20px;
+}
+
+.sidebar__icon {
+  width: 200px;
+  height: 200px;
+  margin: 10px 0;
+}
+
+.sidebarOption {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  width: 100%;
+  text-align: left;
+}
+
+.sidebarOption span.material-icons {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.sidebarOption h2 {
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.sidebarOption:hover {
+  background-color: var(--background-color);
+}
+
+.sidebarOption.active {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+/* Feed Styles */
+.feed {
+  flex: 0.5;
+  border-right: 1px solid var(--background-color);
+  min-width: fit-content;
+  overflow-y: scroll;
+}
+
+.feed__header {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 100;
+  border: 1px solid var(--background-color);
+  padding: 15px 20px;
+}
+
+.feed__header h2 {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.feed::-webkit-scrollbar {
+  display: none;
+}
+
+.feed {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Tweet Box Styles */
+.tweetBox {
+  padding: 10px;
+  border-bottom: 8px solid var(--background-color);
+}
+
+.tweetbox__input {
+  display: flex;
+  padding: 20px;
+}
+
+.tweetbox__input img {
+  border-radius: 50%;
+  height: 40px;
+}
+
+.tweetbox__input input {
+  flex: 1;
+  margin-left: 20px;
+  font-size: 20px;
+  border: none;
+  outline: none;
+}
+
+.tweetBox__tweetButton {
+  background-color: var(--primary-color);
+  border: none;
+  color: white;
+  font-weight: 900;
+  border-radius: 30px;
+  width: 80px;
+  height: 40px;
+  margin-top: 20px;
+  margin-left: auto;
+}
+
+.tweetBox__cameraButton {
+  background-color: #fff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 36px;
+  width: 36px;
+  margin-left: 10px;
+  padding: 8px;
+}
+
+.tweetBox__cameraButton span {
+  font-size: 24px;
+  color: var(--primary-color);
+}
+
+/* Post Styles */
+/* Adjusting the Post Styles for Vertical Stacking */
+.post {
+display: flex;
+flex-direction: column; /* Stack items vertically */
+align-items: flex-start;
+border-bottom: 1px solid var(--background-color);
+padding-bottom: 10px;
+margin-bottom: 20px; /* Add spacing between posts */
+}
+
+.post__avatar {
+margin-bottom: 10px; /* Add some margin below the avatar */
+}
+
+.post__avatar img {
+border-radius: 50%;
+height: 40px;
+}
+
+.post__body {
+width: 100%; /* Take full width to ensure no side-by-side content */
+padding: 10px;
+}
+
+.post__body img {
+width: 100%; /* Make the image take full width */
+object-fit: contain;
+border-radius: 20px;
+}
+
+.post__headerText h3 {
+font-size: 15px;
+margin-bottom: 5px;
+}
+
+.post__headerSpecial {
+font-weight: 600;
+font-size: 12px;
+color: var(--primary-color);
+margin-right: 5px;
+}
+
+.post__headerDescription {
+margin-bottom: 10px;
+font-size: 15px;
+}
+
+.post__footer {
+display: flex;
+justify-content: flex-start; /* Align buttons to the left */
+gap: 10px; /* Add space between buttons */
+width: 100%;
+margin-top: 10px;
+}
+
+
+.post__footerButton {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  color: var(--primary-color);
+  cursor: pointer;
+  padding: 5px;
+}
+
+.post__footerButton .material-icons {
+  margin-right: 5px;
+}
+
+.post__footerButton:hover {
+  color: var(--primary-color);
+}
+
+.post__footerButton:active {
+  transform: scale(0.9);
+}
+
+/* Widgets Styles */
+.widgets {
+  flex: 0.3;
+}
+
+.widgets__input {
+  display: flex;
+  align-items: center;
+  background-color: var(--background-color);
+  padding: 10px;
+  border-radius: 20px;
+  margin: 10px 0;
+}
+
+.widgets__input input {
+  border: none;
+  background-color: var(--background-color);
+}
+
+.widgets__searchIcon {
+  color: var(--primary-color);
+}
+
+.widgets__widgetContainer {
+  margin-top: 15px;
+  padding: 20px;
+  background-color: #f5f8fa;
+  border-radius: 20px;
+}
+
+.widgets__widgetContainer h2 {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+/* Authentication Styles */
+.auth__container {
+  margin: 20px 0;
+  padding: 20px;
+  background-color: #f5f8fa;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.auth__container h2 {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 15px;
+}
+
+.auth__button {
+  display: block;
+  width: 100%;
+  background-color: var(--primary-color);
+  border: none;
+  color: white;
+  font-weight: 900;
+  border-radius: 30px;
+  height: 40px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.auth__button:hover {
+  background-color: #c3311d;
+}
+
+.auth__googleButton {
+  background-color: white;
+  color: #000;
+  border: 2px solid var(--primary-color);
+}
+
+.auth__googleButton i {
+  margin-right: 10px;
+  color: var(--primary-color);
+}
+
+.auth__googleButton:hover {
+  background-color: #e6ecf0;
+}
+
+/* Comment Popup Styles */
+.yorum-popup {
+  display: none; /* Initially hidden */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5); /* Background dimming */
+}
+
+.yorum-popup-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 10px;
+}
+
+.yorum-popup-close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.yorum-popup-close:hover,
+.yorum-popup-close:focus {
+  color: #000;
+}
+
+.yorum-liste {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+}
+
+.yorum {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.yorum-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.yorum-begen-button,
+.yorum-begenme-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.yorum-begen-button .material-icons,
+.yorum-begenme-button .material-icons {
+  margin-right: 5px;
+}
+
+.yorum-ekle {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+#yorumInput {
+  width: 80%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+#yorumEkleButton {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#yorumEkleButton:hover {
+  background-color: #c3311d;
+}
+
+.commentButton {
+  cursor: pointer;
+}
+
+.commentButton:hover {
+  color: var(--primary-color);
+}

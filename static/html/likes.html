@@ -1,91 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Liked Posts</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            margin-top: 20px;
-        }
-        .post {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        .post img {
-            max-width: 100%;
-            border-radius: 8px;
-        }
-        .post .title {
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .post .content {
-            margin-top: 10px;
-        }
-        .post .footer {
-            margin-top: 20px;
-        }
-        .post .footer span {
-            margin-right: 15px;
-        }
-        .post .footer .like, .post .footer .dislike {
-            color: red;
-        }
-        .navbar {
-            background-color: #f8f9fa;
-            padding: 10px;
-        }
-        .navbar .navbar-brand {
-            font-size: 24px;
-            font-weight: bold;
-        }
-    </style>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/css/likes.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous" />
 </head>
+
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="#">Logo</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/home">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/profile">Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/explore">Explore</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <div class="container">
-        {{range .}}
-        <div class="post">
-            <div class="title">{{.PostData.PostTitle}}</div>
-            <div class="content">{{.PostData.PostContent}}</div>
-            {{if .PostData.PostImage}}
-            <div>
-                <img src="data:image/png;base64,{{.PostData.PostImage}}" alt="Post Image">
-            </div>
-            {{end}}
-            <div class="footer">
-                <span>Category: {{.PostData.PostCategory}}</span>
-                <span>Likes: {{.PostData.PostLikeCount}}</span>
-                <span>Dislikes: {{.PostData.PostDislikeCount}}</span>
-                <span class="like">❤️</span>
-                <span class="dislike">💔</span>
-            </div>
-            <div class="footer">
-                <span>Posted by: {{.UserData.Username}} ({{.UserData.Name}})</span>
-            </div>
-        </div>
-        {{end}}
+
+    <!-- sidebar starts -->
+    <div class="sidebar">
+        <!-- Twitter icon replaced with a custom image -->
+        <img src="/static/images/hüpe.png" alt="Hüpe" class="sidebar__icon" />
+        <form action="/home" method="get">
+            <button type="submit" class="sidebarOption active">
+                <span class="material-icons"> home </span>
+                <h2>Ana Sayfa</h2>
+            </button>
+        </form>
+
+
+        <form action="">
+            <button type="submit" class="sidebarOption">
+                <span class="material-icons"> search </span>
+                <h2>Keşfet</h2>
+            </button>
+        </form>
+
+        <form action="/profile" method="get">
+            <button type="submit" class="sidebarOption">
+                <span class="material-icons"> perm_identity </span>
+                <h2>Profil</h2>
+            </button>
+        </form>
     </div>
+    <!-- sidebar ends -->
+    <!-- post starts -->
+    {{range .}}
+    <div class="post">
+        <div class="post__avatar">
+            <img src="data:image/png;base64,{{.UserData.ProfileImage}}" alt="" />
+        </div>
+
+        <div class="post__body">
+            <div class="post__header">
+                <div class="post__headerText">
+                    <h3>
+                        {{.UserData.Name}} {{.UserData.Surname}}
+                        <span class="post__headerSpecial"><span class="material-icons post__badge"> verified
+                            </span>@{{.UserData.Username}}</span>
+                    </h3>
+                </div>
+                <div class="post__headerDescription">
+                    <p>{{.PostData.PostTitle}}</p>
+                </div>
+                <div class="post__headerDescription">
+                    <p>{{.PostData.PostContent}}</p>
+                </div>
+            </div>
+            {{if .PostData.PostImage}}
+            <img src="data:image/png;base64,{{.PostData.PostImage}}" alt="" />
+            {{end}}
+            <div class="post__footer">
+                <button class="post__footerButton">
+                    <span class="material-icons"> thumb_up </span> Beğen
+                </button>
+                <button class="post__footerButton">
+                    <span class="material-icons"> thumb_down </span> Beğenme
+                </button>
+                <button class="post__footerButton commentButton">
+                    <span class="material-icons"> comment </span> Yorum Yap
+                </button>
+            </div>
+        </div>
+    </div>
+    {{end}}
+    <!-- post ends -->
+    </div>
+    <!-- feed ends -->
+
+
+    <!-- Scripts -->
+    <script src="/static/js/homepage.js"></script>
 </body>
+
 </html>

@@ -1,79 +1,41 @@
 <!DOCTYPE html>
 <html lang="tr">
-
 <head>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
     <meta charset="utf-8">
     <link rel="stylesheet" href="/static/css/login.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        .error-message {
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
 </head>
-
 <body>
-
     <!-- Logo Kapsayıcı -->
     <div class="logo-container">
         <img src="/static/images/hüpe.png" alt="Hüpe Logo" class="logo">
-
         <div class="main">
-            <div class="container a-container" id="a-container">
-                <form id="a-form" class="form" method="POST" action="/signup">
-                    <h2 class="form_title title">Hesabınızı Oluşturun!</h2>
-                    <!-- burada hata mesajı gözükecek -->
-{{ if .Message }}
-<p class="error-message">{{ .Message }}</p>
-{{ end }}
-
-                    <input class="form__input" type="text" placeholder="Kullanıcı Adı" name="username" required>
-                    <input class="form__input" type="text" placeholder="İsim" name="name" required>
-                    <input class="form__input" type="text" placeholder="Soyisim" name="surname" required>
-                    <input class="form__input" type="email" placeholder="E-Posta" name="email" required>
-                    <input class="form__input" type="password" placeholder="Şifreniz" name="password" required>
-                    <!--burada tc kimlik butonu ekledik-->
-                    <input class="form__input" type="text" id="tc-kimlik" name="tc-kimlik" maxlength="11" pattern="\d{11}" placeholder="T.C. kimlik numarası(zorunlu değil)">
-                    <input class="button" type="submit" value="Hesap Oluştur">
-                </form>
-
-            </div>
-
             <div class="container b-container" id="b-container">
                 <form id="b-form" class="form" method="POST" action="/login">
-                    <h2 class="form_title title">Hesabınıza giriş yapın!</h2>
-         <!--burada hata mesajı ekledik-->
                     {{ if .ErrorMessage }}
-                    <p class="error-message" style="color: red;">{{ .ErrorMessage }}</p>
-                {{ end }}
-
+                    <p class="error-message">{{ .ErrorMessage }}</p>
+                    {{ end }}
+                    <h2 class="form_title title">Hesabınıza giriş yapın!</h2>
                     <input class="form__input" type="text" placeholder="E-Posta" name="email">
                     <input class="form__input" type="password" placeholder="Şifreniz" name="password">
-                    <a class="form__link" href="/sifreyenileme">Şifrenizi mi unuttunuz?</a>
+                    <a class="form__link" href="/static/html/sifreyenileme.html">Şifrenizi mi unuttunuz?</a>
+                    <a class="form__link" href="/static/html/sign_up.html">Hesabınız yok mu?</a>
                     <input class="button" type="submit" value="Giriş Yap">
-                    
-                                   
                 </form>
-            </div>
-
-            <div class="switch" id="switch-cnt">
-                <div class="switch__circle"></div>
-                <div class="switch__circle switch__circle--t"></div>
-
-                <div class="switch__container" id="switch-c1">
-                    <h2 class="switch__title title">Hoşgeldiniz!</h2>
-                    <p class="switch__description description">Gönderilere bakabilmek ve gönderi paylaşabilmek için
-                        lütfen
-                        giriş yapınız!</p>
-                    <button class="switch__button button switch-btn">GİRİŞ YAP</button>
-                </div>
-
-                <div class="switch__container is-hidden" id="switch-c2">
-                    <h2 class="switch__title title">Merhabalar!</h2>
-                    <p class="switch__description description">Bilgilerinizi doldurun ve hemen sizde bize katılın!</p>
-                    <button class="switch__button button switch-btn">HESAP OLUŞTUR</button>
+                <div>
+                    <button onclick="window.location.href='/auth/google'" class="button">Google ile Giriş Yap</button>
+                    <button onclick="window.location.href='/auth/github'" class="button">GitHub ile Giriş Yap</button>
+                    <button onclick="window.location.href='/auth/facebook'" class="button">facebook ile Giriş Yap</button>
                 </div>
             </div>
         </div>
-
-        <script src="/static/js/login.js"></script>
     </div>
 </body>
-
 </html>

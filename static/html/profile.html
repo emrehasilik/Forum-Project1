@@ -17,54 +17,46 @@
 </head>
 
 <body>
-   <!-- Yan menü başlangıcı -->
-<div class="sidebar">
-    <img src="/static/images/hüpe.png" alt="Hüpe" class="sidebar__icon" />
-    
-    <!-- Ana Sayfa -->
-    <form action="/home" method="get">
-        <button class="sidebarOption">
-            <span class="material-icons">home</span>
-            <h2>Ana Sayfa</h2>
-        </button>
-    </form>
-    
-    <!-- Keşfet -->
-    <form action="/" method="get">
-        <button class="sidebarOption">
-            <span class="material-icons">search</span>
-            <h2>Keşfet</h2>
-        </button>
-    </form>
-    
-    <!-- Profil (aktif sayfa) -->
-    <form action="/profile" method="get">
-        <button type="submit" class="sidebarOption active">
-            <span class="material-icons">perm_identity</span>
-            <h2>Profil</h2>
-        </button>
-    </form>
-    
-<!-- profile.html -->
-<form action="profile/likes" method="get">
-    <button class="sidebarOption">
-        <span class="material-icons">favorite</span>
-        <h2>Beğeniler</h2>
-    </button>
-</form>
+    <!-- Yan menü başlangıcı -->
+    <div class="sidebar">
+        <img src="/static/images/hüpe.png" alt="Hüpe" class="sidebar__icon" />
+        <!-- Ana Sayfa -->
+        <form action="/home" method="get">
+            <button class="sidebarOption">
+                <span class="material-icons">home</span>
+                <h2>Ana Sayfa</h2>
+            </button>
+        </form>
+        <!-- Keşfet -->
+        <form action="/" method="get">
+            <button class="sidebarOption">
+                <span class="material-icons">search</span>
+                <h2>Keşfet</h2>
+            </button>
+        </form>
+        <form action="/profile/likes" method="get">
+            <button class="sidebarOption">
+                <span class="material-icons">favorite</span>
+                <h2>Beğenileriniz</h2>
+            </button>
+        </form>
+        <!-- Profil (aktif sayfa) -->
+        <form action="/profile" method="get">
+            <button type="submit" class="sidebarOption active">
+                <span class="material-icons">perm_identity</span>
+                <h2>Profil</h2>
+            </button>
+        </form>
 
-
-    
-    <!-- Çıkış Yap -->
-    <form action="/logout" method="get">
-        <button type="submit" class="sidebarOption">
-            <span class="material-icons">logout</span>
-            <h2>Çıkış Yap</h2>
-        </button>
-    </form>
-</div>
-<!-- Yan menü sonu -->
-
+        <!-- Çıkış Yap -->
+        <form action="/logout" method="get">
+            <button type="submit" class="sidebarOption">
+                <span class="material-icons">logout</span>
+                <h2>Çıkış Yap</h2>
+            </button>
+        </form>
+    </div>
+    <!-- Yan menü sonu -->
 
     <!-- İçerik başlangıcı -->
     <div class="feed">
@@ -155,23 +147,30 @@
                             <h3>{{.PostTitle}}</h3>
                             <p>{{.PostContent}}</p>
                         </div>
+                        {{if .PostImage}}
+                        <img src="data:image/png;base64,{{.PostImage}}" alt="" width="100px" />
+                        {{end}}
                     </div>
                     <img src="" alt="" />
                     <div class="post__footer">
                         <!-- Beğeni, Beğenme ve Yorum İkonları -->
                         <div class="post__icons">
                             <form action="/profile/likepost" method="post">
-                                <button type="submit" value="{{.PostID}}" name="id" class="material-icons"
-                                    onclick="likePost()">thumb_up</button>
+                                <button type="submit" value="{{.PostID}}" name="id"
+                                    class="material-icons">thumb_up</button>
                                 <label>{{.PostLikeCount}}</label>
                             </form>
                             <!-- Beğenmeme İkonu -->
                             <form action="/profile/dislikepost" method="post">
-                                <button type="submit" value="{{.PostID}}" name="id" class="material-icons"
-                                    onclick="dislikePost()">thumb_down</button>
+                                <button type="submit" value="{{.PostID}}" name="id"
+                                    class="material-icons">thumb_down</button>
                                 <label>{{.PostDislikeCount}}</label>
                             </form>
-                            <span class="material-icons post__icon">comment</span>
+                            <form action="/postpage" method="get">
+                                <button type="submit" value="{{.PostID}}" name="id"
+                                    class="material-icons">comment</button>
+                                <label>Yorum Yap</label>
+                            </form>
                         </div>
                         <!-- Düzenle Butonu -->
                         <button class="post__editButton">Düzenle</button>
@@ -210,7 +209,7 @@
                     </div>
                 </div>
                 {{if .PostData.PostImage}}
-                <img src="https://via.placeholder.com/450" alt="" />
+                <img src="data:image/png;base64,{{.PostData.PostImage}}" alt="" />
                 {{end}}
                 <div class="post__footer">
                     <!-- Beğeni İkonu -->

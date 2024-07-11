@@ -13,24 +13,6 @@
 </head>
 
 <body>
-    <!-- Yorum Popup Penceresi -->
-    <div id="yorumPopup" class="yorum-popup">
-        <div class="yorum-popup-content">
-            <span class="yorum-popup-close">&times;</span>
-            <h2>Yorumlar</h2>
-            <!-- Yorumların gösterileceği yer -->
-            <div class="yorum-liste">
-                <!-- Örnek bir yorum -->
-                <p><strong>Kullanıcı Adı:</strong> Bu harika bir gönderi!</p>
-            </div>
-            <!-- Yorum ekleme formu -->
-            <div class="yorum-ekle">
-                <input type="text" id="yorumInput" placeholder="Yorumunuzu yazın...">
-                <button id="yorumEkleButton">Yorum Ekle</button>
-            </div>
-        </div>
-    </div>
-
     <!-- sidebar starts -->
     <div class="sidebar">
         <!-- Twitter icon replaced with a custom image -->
@@ -43,7 +25,7 @@
         </form>
 
 
-        <form action="">
+        <form action="/discover" method="get">
             <button type="submit" class="sidebarOption">
                 <span class="material-icons"> search </span>
                 <h2>Keşfet</h2>
@@ -115,15 +97,24 @@
                 <img src="data:image/png;base64,{{.PostData.PostImage}}" alt="" />
                 {{end}}
                 <div class="post__footer">
-                    <button class="post__footerButton">
-                        <span class="material-icons"> thumb_up </span> Beğen
-                    </button>
-                    <button class="post__footerButton">
-                        <span class="material-icons"> thumb_down </span> Beğenme
-                    </button>
-                    <button class="post__footerButton">
-                        <span class="material-icons"> comment </span> Yorum Yap
-                    </button>
+                    <!-- Beğeni İkonu -->
+                    <form action="/home/likepost" method="post">
+                        <button type="submit" value="{{.PostData.PostID}}" name="id"
+                            class="material-icons">thumb_up</button>
+                        <label>{{.PostData.PostLikeCount}}</label>
+                    </form>
+                    <!-- Beğenmeme İkonu -->
+                    <form action="/home/dislikepost" method="post">
+                        <button type="submit" value="{{.PostData.PostID}}" name="id"
+                            class="material-icons">thumb_down</button>
+                        <label>{{.PostData.PostDislikeCount}}</label>
+                    </form>
+                    <form action="/postpage">
+                        <button type="submit" value="{{.PostData.PostID}}" name="id"
+                            class="post__footerButton commentButton">
+                            <span class="material-icons"> comment </span> Yorum Yap
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -132,6 +123,7 @@
     </div>
     <!-- feed ends -->
 
+    <!-- Widgets bölümü -->
     <div class="widgets">
         <div class="widgets__input">
             <span class="material-icons widgets__searchIcon">search</span>
@@ -163,38 +155,49 @@
                 <div class="post__footer">
                     <!-- Beğeni İkonu -->
                     <form action="/home/likepost" method="post">
-                        <button type="submit" value="{{.PostData.PostID}}" name="id" class="material-icons"
-                            onclick="likePost()">thumb_up</button>
+                        <button type="submit" value="{{.PostData.PostID}}" name="id"
+                            class="material-icons">thumb_up</button>
                         <label>{{.PostData.PostLikeCount}}</label>
                     </form>
                     <!-- Beğenmeme İkonu -->
                     <form action="/home/dislikepost" method="post">
-                        <button type="submit" value="{{.PostData.PostID}}" name="id" class="material-icons"
-                            onclick="dislikePost()">thumb_down</button>
+                        <button type="submit" value="{{.PostData.PostID}}" name="id"
+                            class="material-icons">thumb_down</button>
                         <label>{{.PostData.PostDislikeCount}}</label>
                     </form>
                     <!-- Yorum İkonu -->
-                    <span class="material-icons" onclick="commentPost()">comment</span>
+                    <form action="/postpage">
+                        <button type="submit" value="{{.PostData.PostID}}" name="id"
+                            class="post__footerButton commentButton">
+                            <span class="material-icons"> comment </span> Yorum Yap
+                        </button>
+                    </form>
                 </div>
             </div>
 
-            {{end}}
-        </div>
-    </div>
-    <!-- Login and Signup Section -->
-    {{if not .IsLoggedIn}}
-    <div class="auth__container">
-        <h2>Hesabınız Yok Mu?</h2>
-        <button class="auth__signupButton">Kayıt Ol</button>
-        <button class="auth__loginButton">Giriş Yap</button>
-        <button class="auth__googleButton">
-            <i class="fab fa-google"></i> Google ile Giriş Yap
-        </button>
-    </div>
-    </div>
-    {{end}}
-    <!-- widgets ends -->
 
+            {{end}}
+
+        </div>
+
+        <!-- Giriş Yap ve Kayıt Ol Bölümü -->
+        {{if not .IsLoggedIn}}
+        <div class="login-signup">
+            <h2>Giriş Yap veya Kayıt Ol</h2>
+            <form action="/login" method="get">
+                <button type="submit" class="login-button">Giriş Yap</button>
+            </form>
+            <form action="/signup" method="get">
+                <button type="submit" class="signup-button">Kayıt Ol</button>
+            </form>
+        </div>
+        {{end}}
+    </div>
+
+
+
+    <!-- Scripts -->
+    <script src="/static/js/homepage.js"></script>
 </body>
 
 </html>

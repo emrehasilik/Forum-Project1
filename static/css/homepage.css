@@ -470,3 +470,147 @@ body {
   background-color: #c3311d;
 }
 
+/* Yorum Popup penceresi stili */
+.yorum-popup {
+  display: none; /* Varsayılan olarak gizlenmiş */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5); /* Arka planı karart */
+}
+
+.yorum-popup-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 10px;
+}
+
+.yorum-popup-close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.yorum-popup-close:hover,
+.yorum-popup-close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.yorum-liste {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.yorum {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.yorum-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.yorum-begen-button,
+.yorum-begenme-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.yorum-begen-button .material-icons,
+.yorum-begenme-button .material-icons {
+  margin-right: 5px;
+}
+
+.yorum-ekle {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+#yorumInput {
+  width: 80%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+#yorumEkleButton {
+  background-color: #DF3821;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#yorumEkleButton:hover {
+  background-color: #DF3821;
+}
+
+/* Yorum butonu ve pop-up stilleri */
+.commentButton {
+  cursor: pointer;
+}
+
+.commentButton:hover {
+  color: #DF3821;
+}
+/* Genel stil */
+.login-signup {
+    margin-top: 10px; /* Widgets'in altından biraz boşluk */
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f5f8fa; /* Arka plan rengi */
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Başlık stili */
+.login-signup h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #DF3821; /* Mavi renk, Twitter tarzı */
+}
+
+/* Butonlar için genel stil */
+.login-signup button {
+    margin: 10px 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color:#DF3821 ; /* Mavi buton rengi */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Buton hover efekti */
+.login-signup button:hover {
+    background-color: #DF3821;
+}
+
+/* Butonları yan yana hizalama */
+.login-signup form {
+    display: inline-block;
+}

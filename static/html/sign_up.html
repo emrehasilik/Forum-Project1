@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/static/css/signup.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        .error-message {
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo Kapsayıcı -->
+    <div class="logo-container">
+        <img src="/static/images/hüpe.png" alt="Hüpe Logo" class="logo">
+        <div class="main">
+            <div class="container a-container" id="a-container">
+                <form id="a-form" class="form" method="POST" action="/signup">
+                    {{ if .Message }}
+                    <p class="error-message">{{ .Message }}</p>
+                    {{ end }}
+                    <h2 class="form_title title">Hesabınızı Oluşturun!</h2>
+                    <input class="form__input" type="text" placeholder="Kullanıcı Adı" name="username" required>
+                    <input class="form__input" type="text" placeholder="İsim" name="name" required>
+                    <input class="form__input" type="text" placeholder="Soyisim" name="surname" required>
+                    <input class="form__input" type="email" placeholder="E-Posta" name="email" required>
+                    <input class="form__input" type="password" placeholder="Şifreniz" name="password" required>
+                    <input class="form__input" type="text" id="tc-kimlik" name="tc-kimlik" maxlength="11" pattern="\d{11}" placeholder="T.C. kimlik numarası(zorunlu değil)">
+                    <a class="form__link" href="/static/html/login.html">Zaten Hesabınız Var mı?</Var></a>
+                    <input class="button" type="submit" value="Hesap Oluştur">
+                </form>
+                <div>
+                    <button onclick="window.location.href='/auth/google'" class="button">Google ile Kayıt Ol</button>
+                    <button onclick="window.location.href='/auth/github'" class="button">GitHub ile Kayıt Ol</button>
+                    <button onclick="window.location.href='/auth/facebook'" class="button">facebook ile Kayıt Ol</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -9,9 +9,9 @@ import (
 	"time"
 
 	_ "github.com/mattn/go-sqlite3"
+	"golang.org/x/crypto/bcrypt"
 )
 
-// Kullanıcının giriş bilgilerini doğrular ve kullanıcı ID'sini döner
 func authenticateUser(email, password string) (bool, int, error) {
 	var storedPassword string
 	var userID int
@@ -24,8 +24,8 @@ func authenticateUser(email, password string) (bool, int, error) {
 		return false, 0, err
 	}
 
-	// Şifreyi karşılaştır (şifreleme olmadan)
-	if password != storedPassword {
+	err = bcrypt.CompareHashAndPassword([]byte(storedPassword), []byte(password))
+	if err != nil {
 		return false, 0, nil
 	}
 	return true, userID, nil
@@ -58,18 +58,12 @@ func setSession(w http.ResponseWriter, userID int, email string, rememberMe bool
 var sessionStore = map[string]string{}
 
 func loginHandler(w http.ResponseWriter, r *http.Request) {
-	// Check if the user is already logged in by checking the session cookie
-	cookie, err := r.Cookie("session_token")
-	if err == nil {
-		// If the cookie exists, check if the user is in the session store
-		if _, ok := sessionStore[cookie.Value]; ok {
-			// If the user is found in the session store, redirect to the homepage
+	if r.Method != http.MethodPost {
+		cookie, _ := r.Cookie("session_token")
+		if cookie != nil {
 			http.Redirect(w, r, "/home", http.StatusSeeOther)
 			return
 		}
-	}
-
-	if r.Method != http.MethodPost {
 		tmpl, _ := template.ParseFiles("./static/html/login.html")
 		tmpl.Execute(w, nil)
 		return
@@ -95,8 +89,8 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		}{
 			ErrorMessage: "Geçersiz e-posta veya şifre",
 		}
-		w.WriteHeader(http.StatusUnauthorized) // Optional: set 401 Unauthorized status code
 		tmpl.Execute(w, data)
+
 		return
 	}
 
@@ -107,6 +101,6 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Redirect to the homepage
-	http.Redirect(w, r, "/home", http.StatusSeeOther)
+	// Ana sayfaya yönlendir
+	http.Redirect(w, r, "/homepage", http.StatusSeeOther)
 }

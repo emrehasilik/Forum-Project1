@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -16,7 +17,7 @@ func homePageHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		title := r.FormValue("title")
 		content := r.FormValue("content")
-
+		categories := findHashtaggedWords(content)
 		err := r.ParseMultipartForm(10 << 20) // 10 MB
 		if err != nil {
 			fmt.Println(err)
@@ -44,7 +45,7 @@ func homePageHandler(w http.ResponseWriter, r *http.Request) {
 
 		if len(title) >= 5 && len(content) >= 10 {
 			userID, _ := strconv.Atoi(cookie.Value)
-			insertPost(userID, title, content, fileBytes)
+			insertPost(userID, title, content,categories, fileBytes)
 		}
 		http.Redirect(w, r, "/home", http.StatusSeeOther)
 	} else {
@@ -92,23 +93,20 @@ func homePageHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func getTopPosts() ([]PostData, error) {
-	connectDatabase()
-	rows, err := database.Query(`select users.username,users.name,users.surname, posts.id,posts.title, posts.content ,posts.created_at, posts.like_count, posts.dislike_count,posts.image
-from posts join users on posts.user_id = users.id ORDER BY like_count DESC LIMIT 3`)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
+func findHashtaggedWords(text string) string {
+	// Split the text into words
+	words := strings.Fields(text)
+	// Create a slice to store the results
+	var results []string
 
-	var posts []PostData
-	for rows.Next() {
-		var post PostData
-		var image Image
-		err = rows.Scan(&post.UserData.Username, &post.UserData.Name, &post.UserData.Surname, &post.PostData.PostID, &post.PostData.PostTitle, &post.PostData.PostContent, &post.PostData.PostCreatedAt, &post.PostData.PostLikeCount, &post.PostData.PostDislikeCount, &image.ImageData)
-		post.PostData.PostImage = convertImg(image)
-		checkError(err)
-		posts = append(posts, post)
+	// Loop through each word
+	for _, word := range words {
+		// Check if the word starts with '#'
+		if strings.HasPrefix(word, "#") {
+			results = append(results, word)
+		}
 	}
-	return posts, nil
+
+	// Join the results slice with ',' and return the string
+	return strings.Join(results, ",")
 }

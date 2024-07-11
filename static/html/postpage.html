@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/css/postpage.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous" />
+</head>
+
+<body>
+    <!-- sidebar starts -->
+    <div class="sidebar">
+        <!-- Twitter icon replaced with a custom image -->
+        <img src="/static/images/hüpe.png" alt="Hüpe" class="sidebar__icon" />
+        <form action="/home" method="get">
+            <button type="submit" class="sidebarOption active">
+                <span class="material-icons"> home </span>
+                <h2>Ana Sayfa</h2>
+            </button>
+        </form>
+
+
+        <form action="">
+            <button type="submit" class="sidebarOption">
+                <span class="material-icons"> search </span>
+                <h2>Keşfet</h2>
+            </button>
+        </form>
+
+        <form action="/profile" method="get">
+            <button type="submit" class="sidebarOption">
+                <span class="material-icons"> perm_identity </span>
+                <h2>Profil</h2>
+            </button>
+        </form>
+    </div>
+    <!-- sidebar ends -->
+
+    <!-- feed starts -->
+    <div class="feed">
+        <!-- post starts -->
+        <div class="post">
+            <div class="post__avatar">
+                <img src="data:image/png;base64,{{.PostData.UserData.ProfileImage}}" alt="" />
+            </div>
+
+            <div class="post__body">
+                <div class="post__header">
+                    <div class="post__headerText">
+                        <h3>
+                            {{.PostData.UserData.Name}} {{.PostData.UserData.Surname}}
+                            <span class="post__headerSpecial"><span class="material-icons post__badge"> verified
+                                </span>@{{.PostData.UserData.Username}}</span>
+                        </h3>
+                    </div>
+                    <div class="post__headerDescription">
+                        <p>{{.PostData.PostData.PostTitle}}</p>
+                    </div>
+                    <div class="post__headerDescription">
+                        <p>{{.PostData.PostData.PostContent}}</p>
+                    </div>
+                </div>
+                {{if .PostData.PostData.PostImage}}
+                <img src="data:image/png;base64,{{.PostData.PostData.PostImage}}" alt="" />
+                {{end}}
+                <form action="/home/likepost" method="post">
+                    <button type="submit" value="{{.PostData.PostData.PostID}}" name="id"
+                        class="material-icons">thumb_up</button>
+                    <label>{{.PostData.PostData.PostLikeCount}}</label>
+                </form>
+                <!-- Beğenmeme İkonu -->
+                <form action="/home/dislikepost" method="post">
+                    <button type="submit" value="{{.PostData.PostData.PostID}}" name="id"
+                        class="material-icons">thumb_down</button>
+                    <label>{{.PostData.PostData.PostDislikeCount}}</label>
+                </form>
+                <h2>Yorumlar</h2>
+                <!-- Comments list -->
+                <div class="yorum-liste">
+                    <!-- Sample comment -->
+                    {{range .PostData.CommentsData}}
+                    <div class="yorum">
+                        <p><strong>{{.CommentOwner}}</strong>{{.CommentContent}}</p>
+                        <div class="yorum-footer">
+                            <form action="/postpage/likecomment">
+                                <button class="yorum-begen-button" name="commentid" value="{{.CommentID}}"><span
+                                        class="material-icons">thumb_up</span>
+                                    {{.CommentLikeCount}}</button>
+                            </form>
+                            <form action="/postpage/dislikecomment">
+                                <input type="hidden" name="postid" value="{{$.PostData.PostData.PostID}}">
+                                <button class="yorum-begenme-button" name="commentid" value="{{.CommentID}}"><span
+                                        class="material-icons">thumb_down</span>
+                                    {{.CommentDislikeCount}}</button>
+                            </form>
+                        </div>
+                    </div>
+                    {{end}}
+                    <!-- New comments will be added here -->
+                </div>
+                <!-- Comment form -->
+                {{if .IsLoggedIn}}
+                <form action="/postpage" method="post">
+                    <div class="yorum-ekle">
+                        <input type="text" class="yorumInput" placeholder="Yorumunuzu yazın..." name="comment">
+                        <button type="submit" class="yorumEkleButton" name="commentPostID"
+                            value="{{.PostData.PostData.PostID}}">Yorum
+                            Ekle</button>
+                    </div>
+                </form>
+                {{end}}
+            </div>
+        </div>
+    </div>
+    <!-- post ends -->
+    </div>
+    <!-- Login and Signup Section -->
+    {{if not .IsLoggedIn}}
+    <div class="login-signup">
+        <h2>Giriş Yap veya Kayıt Ol</h2>
+        <form action="/login" method="get">
+            <button type="submit" class="login-button">Giriş Yap</button>
+        </form>
+        <form action="/signup" method="get">
+            <button type="submit" class="signup-button">Kayıt Ol</button>
+        </form>
+    </div>
+    {{end}}
+</body>
+
+</html>
