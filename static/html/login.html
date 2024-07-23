@@ -5,11 +5,13 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="/static/css/login.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         .error-message {
             color: red;
             margin-top: 5px;
         }
+        
     </style>
 </head>
 <body>
@@ -29,10 +31,10 @@
                     <a class="form__link" href="/static/html/sign_up.html">Hesabınız yok mu?</a>
                     <input class="button" type="submit" value="Giriş Yap">
                 </form>
-                <div>
-                    <button onclick="window.location.href='/auth/google'" class="button">Google ile Giriş Yap</button>
-                    <button onclick="window.location.href='/auth/github'" class="button">GitHub ile Giriş Yap</button>
-                    <button onclick="window.location.href='/auth/facebook'" class="button">facebook ile Giriş Yap</button>
+                <div class="social-buttons">
+                    <button onclick="window.location.href='/auth/google'" class="button google"><i class="fab fa-google"></i> Google ile Giriş Yap</button>
+                    <button onclick="window.location.href='/auth/github'" class="button github"><i class="fab fa-github"></i> GitHub ile Giriş Yap</button>
+                    <button onclick="window.location.href='/auth/facebook'" class="button facebook"><i class="fab fa-facebook"></i> Facebook ile Giriş Yap</button>
                 </div>
             </div>
         </div>

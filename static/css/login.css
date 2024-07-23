@@ -96,3 +96,52 @@ body {
   font-size: 14px;
   text-align: center;
 }
+/* Sosyal medya giriş butonları için genel stil */
+.social-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Butonlar arasındaki boşluk */
+  align-items: center; /* Butonları ortalar */
+}
+
+.social-buttons .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  width: 90%; /* Genişliği ayarlayın, Giriş Yap butonundan biraz daha kısa */
+  max-width: 300px; /* Maksimum genişlik ayarı */
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  color: white;
+}
+
+.social-buttons .button i {
+  margin-right: 8px;
+}
+
+.social-buttons .button.google {
+  background-color: #db4437;
+}
+
+.social-buttons .button.google:hover {
+  background-color: #b33c2c;
+}
+
+.social-buttons .button.github {
+  background-color: #333;
+}
+
+.social-buttons .button.github:hover {
+  background-color: #24292e;
+}
+
+.social-buttons .button.facebook {
+  background-color: #3b5998;
+}
+
+.social-buttons .button.facebook:hover {
+  background-color: #2d4373;
+}
