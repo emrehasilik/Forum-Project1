@@ -6,20 +6,30 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 
-	_ "github.com/mattn/go-sqlite3"
+	"github.com/joho/godotenv"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/github"
 )
 
-var githubOAuthConfig = &oauth2.Config{
-	RedirectURL:  "http://localhost:8080/auth/github/callback",
-	ClientID:     "Ov23liJ1gCxwPv6pT79K",
-	ClientSecret: "596b06de3634313475b92eacba984dabb87d28fd",
-	Scopes:       []string{"user:email"},
-	Endpoint:     github.Endpoint,
+var githubOAuthConfig *oauth2.Config
+
+func init() {
+	err := godotenv.Load("auth/.env")
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	githubOAuthConfig = &oauth2.Config{
+		RedirectURL:  "http://localhost:8080/auth/github/callback",
+		ClientID:     os.Getenv("GITHUB_CLIENT_ID"),
+		ClientSecret: os.Getenv("GITHUB_CLIENT_SECRET"),
+		Scopes:       []string{"user:email"},
+		Endpoint:     github.Endpoint,
+	}
 }
 
 func HandleGithubLogin(w http.ResponseWriter, r *http.Request) {

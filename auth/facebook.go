@@ -6,20 +6,30 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 
-	_ "github.com/mattn/go-sqlite3"
+	"github.com/joho/godotenv"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/facebook"
 )
 
-var facebookOAuthConfig = &oauth2.Config{
-	RedirectURL:  "http://localhost:8080/auth/facebook/callback",
-	ClientID:     "509859601415154",
-	ClientSecret: "0f46b5770edaac76224934964332cfed",
-	Scopes:       []string{"public_profile", "email"},
-	Endpoint:     facebook.Endpoint,
+var facebookOAuthConfig *oauth2.Config
+
+func init() {
+	err := godotenv.Load("auth/.env")
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	facebookOAuthConfig = &oauth2.Config{
+		RedirectURL:  "http://localhost:8080/auth/facebook/callback",
+		ClientID:     os.Getenv("FACEBOOK_CLIENT_ID"),
+		ClientSecret: os.Getenv("FACEBOOK_CLIENT_SECRET"),
+		Scopes:       []string{"public_profile", "email"},
+		Endpoint:     facebook.Endpoint,
+	}
 }
 
 func HandleFacebookLogin(w http.ResponseWriter, r *http.Request) {

@@ -8,25 +8,35 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 
+	"github.com/joho/godotenv"
 	_ "github.com/mattn/go-sqlite3"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 )
 
-var googleOAuthConfig = &oauth2.Config{
-	RedirectURL:  "http://localhost:8080/auth/google/callback",
-	ClientID:     "527452364696-388fencg8tha8tp3so6ad8puqblvhfe7.apps.googleusercontent.com",
-	ClientSecret: "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",
-	Scopes: []string{"https://www.googleapis.com/auth/userinfo.profile",
-		"https://www.googleapis.com/auth/userinfo.email",
-	},
-	Endpoint: google.Endpoint,
-}
-
+var googleOAuthConfig *oauth2.Config
 var database *sql.DB
+
+func init() {
+	err := godotenv.Load("auth/.env")
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	googleOAuthConfig = &oauth2.Config{
+		RedirectURL:  "http://localhost:8080/auth/google/callback",
+		ClientID:     os.Getenv("GOOGLE_CLIENT_ID"),
+		ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),
+		Scopes: []string{"https://www.googleapis.com/auth/userinfo.profile",
+			"https://www.googleapis.com/auth/userinfo.email",
+		},
+		Endpoint: google.Endpoint,
+	}
+}
 
 func ConnectDB() error {
 	var err error
